@@ -4,6 +4,8 @@ use structopt::StructOpt;
 
 #[derive(StructOpt)] //annotate the struct with this to StructOpt takes this struct as the argument definition
 struct Options {
+    #[structopt(default_value = "Meow!")]
+    /// What does the cat say?
     message: String,
 }
 
