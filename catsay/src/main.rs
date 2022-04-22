@@ -1,5 +1,7 @@
+extern crate colored;
 extern crate structopt; // use "StructOpt" crate to work with arguments in a simpler way and making help, version flags automatically
 
+use colored::*;
 use structopt::StructOpt;
 
 #[derive(StructOpt)] //annotate the struct with this to StructOpt takes this struct as the argument definition
@@ -25,11 +27,11 @@ fn main() {
     }
 
     // 'println' makes STDOUT
-    println!("{}", message);
+    println!("{}", message.bright_yellow().on_blue().underline());
     println!(" \\");
     println!("  \\");
     println!("       /\\_/\\");
-    println!("     ( {eye}   {eye} )", eye = eye);
+    println!("     ( {eye}   {eye} )", eye = eye.bold().red());
     println!("      =( I )=");
 }
 
