@@ -13,6 +13,10 @@ struct Options {
     #[structopt(short = "d", long = "dead")]
     /// Make the cat appera dead
     dead: bool,
+
+    #[structopt(short = "f", long = "file", parse(from_os_str))]
+    /// Load the cat picture from the specified file
+    catfile: Option<std::path::PathBuf>, // use "Option" to make this optional
 }
 
 fn main() {
@@ -26,13 +30,25 @@ fn main() {
         eprintln!("A cat shouldn't bark like a dog!")
     }
 
-    // 'println' makes STDOUT
-    println!("{}", message.bright_yellow().on_blue().underline());
-    println!(" \\");
-    println!("  \\");
-    println!("       /\\_/\\");
-    println!("     ( {eye}   {eye} )", eye = eye.bold().red());
-    println!("      =( I )=");
+    match &options.catfile {
+        Some(path) => {
+            let cat_template =
+                std::fs::read_to_string(path).expect(&format!("could not read file {:?}", path));
+
+            let mut cat_picture = cat_template.replace("{eye}", eye);
+            cat_picture = cat_picture.replace("{message}", &message);
+            println!("{}", &cat_picture);
+        }
+        None => {
+            // 'println' makes STDOUT
+            println!("{}", message.bright_yellow().on_blue().underline());
+            println!(" \\");
+            println!("  \\");
+            println!("       /\\_/\\");
+            println!("     ( {eye}   {eye} )", eye = eye.bold().red());
+            println!("      =( I )=");
+        }
+    }
 }
 
 // cargo run -- "Hello world!"
