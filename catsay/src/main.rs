@@ -18,6 +18,13 @@ fn main() {
     let message = options.message;
     let eye = if options.dead { "x" } else { "o" };
 
+    // make an STDERR by 'eprintln'.
+    // use 2> and 1> to write STDERR and STDOUT into separate files
+    if message.to_lowercase() == "woof" {
+        eprintln!("A cat shouldn't bark like a dog!")
+    }
+
+    // 'println' makes STDOUT
     println!("{}", message);
     println!(" \\");
     println!("  \\");
