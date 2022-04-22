@@ -1,8 +1,10 @@
 extern crate colored;
+extern crate exitfailure;
 extern crate failure;
 extern crate structopt; // use "StructOpt" crate to work with arguments in a simpler way and making help, version flags automatically
 
 use colored::*;
+use exitfailure::ExitFailure;
 use failure::ResultExt;
 use structopt::StructOpt;
 
@@ -21,7 +23,7 @@ struct Options {
     catfile: Option<std::path::PathBuf>, // use "Option" to make this optional
 }
 
-fn main() -> Result<(), failure::Error> {
+fn main() -> Result<(), ExitFailure> {
     let options = Options::from_args();
     let message = options.message;
     let eye = if options.dead { "x" } else { "o" };
