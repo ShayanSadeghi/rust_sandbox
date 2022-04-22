@@ -1,7 +1,9 @@
 extern crate colored;
+extern crate failure;
 extern crate structopt; // use "StructOpt" crate to work with arguments in a simpler way and making help, version flags automatically
 
 use colored::*;
+use failure::ResultExt;
 use structopt::StructOpt;
 
 #[derive(StructOpt)] //annotate the struct with this to StructOpt takes this struct as the argument definition
@@ -19,7 +21,7 @@ struct Options {
     catfile: Option<std::path::PathBuf>, // use "Option" to make this optional
 }
 
-fn main() {
+fn main() -> Result<(), failure::Error> {
     let options = Options::from_args();
     let message = options.message;
     let eye = if options.dead { "x" } else { "o" };
@@ -32,8 +34,8 @@ fn main() {
 
     match &options.catfile {
         Some(path) => {
-            let cat_template =
-                std::fs::read_to_string(path).expect(&format!("could not read file {:?}", path));
+            let cat_template = std::fs::read_to_string(path)
+                .with_context(|_| format!("could not read file {:?}", path))?;
 
             let mut cat_picture = cat_template.replace("{eye}", eye);
             cat_picture = cat_picture.replace("{message}", &message);
@@ -49,6 +51,7 @@ fn main() {
             println!("      =( I )=");
         }
     }
+    Ok(())
 }
 
 // cargo run -- "Hello world!"
