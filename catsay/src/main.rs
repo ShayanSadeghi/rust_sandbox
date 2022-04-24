@@ -6,6 +6,7 @@ extern crate structopt; // use "StructOpt" crate to work with arguments in a sim
 use colored::*;
 use exitfailure::ExitFailure;
 use failure::ResultExt;
+use std::io::{self, Read};
 use structopt::StructOpt;
 
 #[derive(StructOpt)] //annotate the struct with this to StructOpt takes this struct as the argument definition
@@ -21,11 +22,21 @@ struct Options {
     #[structopt(short = "f", long = "file", parse(from_os_str))]
     /// Load the cat picture from the specified file
     catfile: Option<std::path::PathBuf>, // use "Option" to make this optional
+
+    #[structopt(short = "i", long = "stdin")]
+    /// Read the message from STDIN instead of the argument
+    stdin: bool,
 }
 
 fn main() -> Result<(), ExitFailure> {
     let options = Options::from_args();
-    let message = options.message;
+    let mut message = String::new();
+    if options.stdin {
+        println!("hey");
+        io::stdin().read_to_string(&mut message)?;
+    } else {
+        message = options.message;
+    }
     let eye = if options.dead { "x" } else { "o" };
 
     // make an STDERR by 'eprintln'.
