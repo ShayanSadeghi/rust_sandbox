@@ -11,3 +11,14 @@ fn run_with_defaults() -> Result<(), Box<dyn std::error::Error>> {
         .stdout(predicate::str::contains("Meow!")); // check program contains a string
     Ok(())
 }
+
+#[test]
+fn fail_on_non_existing_file() -> Result<(), Box<dyn std::error::Error>> {
+    Command::cargo_bin("catsay")
+        .expect("binary exists")
+        .args(&["-f", "no/such/file.txt"])
+        .assert()
+        .failure();
+
+    Ok(())
+}
