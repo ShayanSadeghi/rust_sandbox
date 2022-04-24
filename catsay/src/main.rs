@@ -32,7 +32,6 @@ fn main() -> Result<(), ExitFailure> {
     let options = Options::from_args();
     let mut message = String::new();
     if options.stdin {
-        println!("hey");
         io::stdin().read_to_string(&mut message)?;
     } else {
         message = options.message;
