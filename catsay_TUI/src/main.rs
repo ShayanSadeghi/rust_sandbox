@@ -1,7 +1,7 @@
 extern crate cursive;
 
 use cursive::event::Key;
-use cursive::views::TextView;
+use cursive::views::{Dialog, TextView};
 
 fn main() {
   let mut siv = cursive::default();
@@ -13,7 +13,7 @@ fn main() {
     ( o o )
     =( I )=";
 
-  siv.add_layer(TextView::new(cat_text));
+  siv.add_layer(Dialog::around(TextView::new(cat_text)).button("OK", |s| s.quit()));
 
   // Listen to Key::Esc and quit
   siv.add_global_callback(Key::Esc, |s| s.quit());
