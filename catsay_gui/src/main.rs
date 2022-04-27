@@ -4,7 +4,7 @@ extern crate gtk;
 use gio::prelude::*;
 use gtk::prelude::*;
 
-use gtk::{Application, ApplicationWindow, Button};
+use gtk::{Application, ApplicationWindow, Box, Button, Image, Label, Orientation};
 
 fn main() {
     let application = Application::builder()
@@ -19,14 +19,17 @@ fn main() {
             .default_height(70)
             .build();
 
-        let button = Button::with_label("Click Me!");
+        let layout_box = Box::new(Orientation::Vertical, 0);
 
-        button.connect_clicked(|_| {
-            eprintln!("Clicked!");
-        });
-        window.add(&button);
+        let label = Label::new(Some("Meow!\n        \\\n         \\\n"));
 
-        window.show_all();
+        layout_box.add(&label);
+
+        let cat_image = Image::from_file("./images/cat.png");
+
+        layout_box.add(&cat_image);
+        window.add(&layout_box);
+        window.show_all()
     });
     application.run();
 }
