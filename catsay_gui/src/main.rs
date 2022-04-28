@@ -4,7 +4,18 @@ extern crate gtk;
 use gio::prelude::*;
 use gtk::prelude::*;
 
-use gtk::{Application, ApplicationWindow, Box, Button, Image, Label, Orientation};
+use gtk::Application;
+
+fn build_ui(app: &gtk::Application) {
+    let glade_src = include_str!("Layout.glade");
+
+    let builder = gtk::Builder::from_string(glade_src);
+
+    let window: gtk::Window = builder.object("applicationwindow1").unwrap();
+
+    window.set_application(Some(app));
+    window.show_all();
+}
 
 fn main() {
     let application = Application::builder()
@@ -12,24 +23,7 @@ fn main() {
         .build();
 
     application.connect_activate(|app| {
-        let window = ApplicationWindow::builder()
-            .application(app)
-            .title("First GTK App")
-            .default_width(350)
-            .default_height(70)
-            .build();
-
-        let layout_box = Box::new(Orientation::Vertical, 0);
-
-        let label = Label::new(Some("Meow!\n        \\\n         \\\n"));
-
-        layout_box.add(&label);
-
-        let cat_image = Image::from_file("./images/cat.png");
-
-        layout_box.add(&cat_image);
-        window.add(&layout_box);
-        window.show_all()
+        build_ui(app);
     });
     application.run();
 }
