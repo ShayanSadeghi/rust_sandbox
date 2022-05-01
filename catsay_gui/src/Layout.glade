@@ -98,10 +98,9 @@
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <child>
-              <object class="GtkImage">
+              <object class="GtkLabel" id="message_output">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="pixbuf">images/cat.png</property>
               </object>
             </child>
           </object>
@@ -109,6 +108,18 @@
             <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="position">3</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="image_output">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">images/cat.png</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">4</property>
           </packing>
         </child>
       </object>
