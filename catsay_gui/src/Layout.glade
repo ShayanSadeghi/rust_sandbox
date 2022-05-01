@@ -27,7 +27,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkEntry">
+              <object class="GtkEntry" id="message">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
               </object>
@@ -62,7 +62,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkSwitch">
+              <object class="GtkSwitch" id="switch_dead">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
               </object>
@@ -81,8 +81,8 @@
           </packing>
         </child>
         <child>
-          <object class="GtkButton">
-            <property name="label" translatable="yes">button</property>
+          <object class="GtkButton" id="btn_generate">
+            <property name="label" translatable="yes">Generate</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
@@ -94,14 +94,20 @@
           </packing>
         </child>
         <child>
-          <object class="GtkImage">
+          <object class="GtkViewport">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="pixbuf">../images/cat.png</property>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="pixbuf">images/cat.png</property>
+              </object>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
-            <property name="fill">False</property>
+            <property name="fill">True</property>
             <property name="position">3</property>
           </packing>
         </child>
