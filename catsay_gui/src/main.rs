@@ -18,6 +18,8 @@ fn build_ui(app: &gtk::Application) {
     // Inputs:
     let message_input: gtk::Entry = builder.object("message").unwrap();
 
+    let with_bg_switch: gtk::Switch = builder.object("switch_bg").unwrap();
+
     // Submit button:
     let button: gtk::Button = builder.object("btn_generate").unwrap();
 
@@ -30,6 +32,14 @@ fn build_ui(app: &gtk::Application) {
                                                    // if we don't clone it, we could not then hide the image
 
     button.connect_clicked(move |_| {
+        let with_bg = with_bg_switch.is_active();
+
+        if with_bg {
+            image_output_clone.set_from_file(Some("./images/cat_with_bg.png"));
+        } else {
+            image_output_clone.set_from_file(Some("./images/cat.png"));
+        }
+
         message_output.set_text(&format!("{}\n   /\n  /", message_input.text().as_str()));
         image_output_clone.show();
     });
